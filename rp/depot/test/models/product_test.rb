@@ -71,4 +71,19 @@ class ProductTest < ActiveSupport::TestCase
     assert_equal [I18n.translate('activerecord.errors.messages.taken')], product.errors[:title]
   end
 
+  test "название товара не менее 10 символов" do
+    product = Product.new(description: "kjhljdshljshdjhsj kjhj  sdj j",
+      price: 1,
+      image_url: "sdjfh.png")
+    
+    product.title = "123456789"
+    assert product.invalid?
+    assert_equal ["длинна названия должна быть не менее 10 символов"],
+    product.errors[:title]
+
+    product.title = "1234567890"
+    assert product.invalid?
+  end
+
+
 end
