@@ -52,4 +52,15 @@ class ProductsControllerTest < ActionController::TestCase
 
     assert_redirected_to products_path
   end
+
+  test "должно быть 3 кнопки list_actions" do
+    get :index
+    assert_select ".list_actions" do |command|
+      command.each do |element|
+        assert_select element, "a", 3
+      end
+    end
+  end
+
+
 end
